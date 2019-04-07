@@ -1,0 +1,60 @@
+int is_space(char c)
+{
+	if (c <= 32)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int is_valid(char c, int base)
+{
+	char valid1[17] = "0123456789abcdef";
+	char valid2[17] = "0123456789ABCDEF";
+
+	while (base--)
+	{
+		if(valid1[base] == c || valid2[base] == c)
+		{
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	value_of(char c)
+{
+	if (c >= '0' && c<= '9')
+	{
+		return (c - '0');
+	}
+	else if (c >= 'a' && c <= 'f')
+	{
+		return (c - 'a' + 10);
+	}
+	else if (c >= 'A' && c <= 'F')
+	{
+		return (c - 'A' + 10);
+	}
+	return (0);
+}
+
+int ft_atoi_base(const char *str, int str_base)
+{
+	int result;
+	int sign;
+
+	result = 0;
+	sign = 0;
+	while(is_space(*str))
+	{
+		str++;
+	}
+	sign = (*str == '-') ? -1 : 1;
+	(*str == '-' || *str == '+') ? ++str : 0;
+	while (is_valid(*str, str_base))
+	{
+		result = result * str_base + value_of(*str++);
+	}
+	return (result * sign);
+}
